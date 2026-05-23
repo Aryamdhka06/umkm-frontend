@@ -143,7 +143,7 @@
       <div class="produk-card">
 
         <img
-    src="https://web-production-aa9b5.up.railway.app/static/uploads/${item.gambar_url}"
+    src="${item.gambar_url}"
     alt="${item.nama}"
     class="produk-image"
   />
