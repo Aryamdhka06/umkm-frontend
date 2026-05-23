@@ -1,208 +1,208 @@
-// js/home.js
+  // js/home.js
 
-import {
-  apiGetProduk,
-  apiGetKategori,
-  apiGetRekomendasi,
-  apiAddWishlist,
-  apiAddKeranjang,
-  apiLogout
-} from "./api.js";
+  import {
+    apiGetProduk,
+    apiGetKategori,
+    apiGetRekomendasi,
+    apiAddWishlist,
+    apiAddKeranjang,
+    apiLogout
+  } from "./api.js";
 
-import {
-  renderRekomendasiCard
-} from "./rekomendasi.js";
+  import {
+    renderRekomendasiCard
+  } from "./rekomendasi.js";
 
-/**
- * ELEMENT
- */
+  /**
+   * ELEMENT
+   */
 
-const produkContainer =
-  document.getElementById(
-    "produkContainer"
-  );
-
-const rekomendasiContainer =
-  document.getElementById(
-    "rekomendasiContainer"
-  );
-
-const kategoriSelect =
-  document.getElementById(
-    "kategoriSelect"
-  );
-
-const sortSelect =
-  document.getElementById(
-    "sortSelect"
-  );
-
-const searchInput =
-  document.getElementById(
-    "searchInput"
-  );
-
-const loadingContainer =
-  document.getElementById(
-    "loadingContainer"
-  );
-
-const logoutBtn =
-  document.getElementById(
-    "logoutBtn"
-  );
-
-const hamburger =
-  document.getElementById(
-    "hamburger"
-  );
-
-const navLinks =
-  document.getElementById(
-    "navLinks"
-  );
-
-/**
- * CHECK LOGIN
- */
-
-const user =
-  JSON.parse(
-    localStorage.getItem("umkm_user")
-  );
-
-if (!user) {
-  window.location.href =
-    "../../index.html";
-}
-
-/**
- * NAVBAR MOBILE
- */
-
-hamburger.addEventListener(
-  "click",
-  () => {
-    navLinks.classList.toggle("show");
-  }
-);
-
-/**
- * LOGOUT
- */
-
-logoutBtn.addEventListener(
-  "click",
-  () => {
-    apiLogout();
-  }
-);
-
-/**
- * LOADING
- */
-
-function setLoading(show){
-
-  if(show){
-    loadingContainer.classList.remove(
-      "hidden"
+  const produkContainer =
+    document.getElementById(
+      "produkContainer"
     );
-  }else{
-    loadingContainer.classList.add(
-      "hidden"
+
+  const rekomendasiContainer =
+    document.getElementById(
+      "rekomendasiContainer"
     );
+
+  const kategoriSelect =
+    document.getElementById(
+      "kategoriSelect"
+    );
+
+  const sortSelect =
+    document.getElementById(
+      "sortSelect"
+    );
+
+  const searchInput =
+    document.getElementById(
+      "searchInput"
+    );
+
+  const loadingContainer =
+    document.getElementById(
+      "loadingContainer"
+    );
+
+  const logoutBtn =
+    document.getElementById(
+      "logoutBtn"
+    );
+
+  const hamburger =
+    document.getElementById(
+      "hamburger"
+    );
+
+  const navLinks =
+    document.getElementById(
+      "navLinks"
+    );
+
+  /**
+   * CHECK LOGIN
+   */
+
+  const user =
+    JSON.parse(
+      localStorage.getItem("umkm_user")
+    );
+
+  if (!user) {
+    window.location.href =
+      "../../index.html";
   }
-}
 
-/**
- * TOAST
- */
+  /**
+   * NAVBAR MOBILE
+   */
 
-function showToast(message){
+  hamburger.addEventListener(
+    "click",
+    () => {
+      navLinks.classList.toggle("show");
+    }
+  );
 
-  const toast =
-    document.getElementById("toast");
+  /**
+   * LOGOUT
+   */
 
-  toast.textContent = message;
+  logoutBtn.addEventListener(
+    "click",
+    () => {
+      apiLogout();
+    }
+  );
 
-  toast.classList.add("show");
+  /**
+   * LOADING
+   */
 
-  setTimeout(() => {
-    toast.classList.remove("show");
-  },3000);
-}
+  function setLoading(show){
 
-/**
- * RENDER PRODUK
- */
+    if(show){
+      loadingContainer.classList.remove(
+        "hidden"
+      );
+    }else{
+      loadingContainer.classList.add(
+        "hidden"
+      );
+    }
+  }
 
-function renderProdukCard(item){
+  /**
+   * TOAST
+   */
 
-  return `
-    <div class="produk-card">
+  function showToast(message){
 
-      <img
-  src="https://web-production-aa9b5.up.railway.app/static/uploads/${item.gambar_url}"
-  alt="${item.nama}"
-  class="produk-image"
-/>
+    const toast =
+      document.getElementById("toast");
 
-      <div class="produk-content">
+    toast.textContent = message;
 
-        <span class="badge">
-          ${item.kategori}
-        </span>
+    toast.classList.add("show");
 
-        <h3 class="produk-title">
-          ${item.nama}
-        </h3>
+    setTimeout(() => {
+      toast.classList.remove("show");
+    },3000);
+  }
 
-        <div class="produk-price">
-          Rp ${Number(item.harga)
-            .toLocaleString("id-ID")}
-        </div>
+  /**
+   * RENDER PRODUK
+   */
 
-        <div class="produk-meta">
-          ⭐ ${item.rating || 4.5}
-        </div>
+  function renderProdukCard(item){
 
-        <div class="produk-actions">
+    return `
+      <div class="produk-card">
 
-          <button
-            class="btn btn-secondary detail-btn"
-            data-id="${item.id}"
-          >
-            Detail
-          </button>
+        <img
+    src="https://web-production-aa9b5.up.railway.app/static/uploads/${item.gambar_url}"
+    alt="${item.nama}"
+    class="produk-image"
+  />
 
-          <button
-            class="btn btn-secondary wishlist-btn"
-            data-id="${item.id}"
-          >
-            ❤
-          </button>
+        <div class="produk-content">
 
-          <button
-            class="btn btn-primary cart-btn"
-            data-id="${item.id}"
-          >
-            +
-          </button>
+          <span class="badge">
+            ${item.kategori}
+          </span>
+
+          <h3 class="produk-title">
+            ${item.nama}
+          </h3>
+
+          <div class="produk-price">
+            Rp ${Number(item.harga)
+              .toLocaleString("id-ID")}
+          </div>
+
+          <div class="produk-meta">
+            ⭐ ${item.rating || 4.5}
+          </div>
+
+          <div class="produk-actions">
+
+            <button
+              class="btn btn-secondary detail-btn"
+              data-id="${item.id}"
+            >
+              Detail
+            </button>
+
+            <button
+              class="btn btn-secondary wishlist-btn"
+              data-id="${item.id}"
+            >
+              ❤
+            </button>
+
+            <button
+              class="btn btn-primary cart-btn"
+              data-id="${item.id}"
+            >
+              +
+            </button>
+
+          </div>
 
         </div>
 
       </div>
+    `;
+  }
 
-    </div>
-  `;
-}
+  /**
+   * LOAD PRODUK
+   */
 
-/**
- * LOAD PRODUK
- */
-
-async function loadProduk(){
+  async function loadProduk(){
 
   try{
 
@@ -237,6 +237,8 @@ async function loadProduk(){
     const produk =
       data.data || [];
 
+    console.log("gambar_url contoh:", produk[0]?.gambar_url); // ← tambah ini
+
     if(!produk.length){
 
       produkContainer.innerHTML = `
@@ -263,193 +265,193 @@ async function loadProduk(){
   }
 }
 
-/**
- * LOAD REKOMENDASI
- */
+  /**
+   * LOAD REKOMENDASI
+   */
 
-async function loadRekomendasi() {
-  try {
-    const data = await apiGetRekomendasi();
+  async function loadRekomendasi() {
+    try {
+      const data = await apiGetRekomendasi();
 
-    // ✅ Ganti data.data → data.recommendations
-    const items = data.recommendations || [];
+      // ✅ Ganti data.data → data.recommendations
+      const items = data.recommendations || [];
 
-    if (!items.length) {
+      if (!items.length) {
+        rekomendasiContainer.innerHTML = `
+          <div class="empty-state">
+            Belum ada rekomendasi. Coba beri rating beberapa produk dulu.
+          </div>
+        `;
+        return;
+      }
+
+      rekomendasiContainer.innerHTML =
+        items.map(renderRekomendasiCard).join("");
+
+    } catch (error) {
       rekomendasiContainer.innerHTML = `
         <div class="empty-state">
-          Belum ada rekomendasi. Coba beri rating beberapa produk dulu.
+          Gagal memuat rekomendasi.
         </div>
       `;
-      return;
+      console.error("Rekomendasi error:", error); // ← tambah ini biar gampang debug
     }
-
-    rekomendasiContainer.innerHTML =
-      items.map(renderRekomendasiCard).join("");
-
-  } catch (error) {
-    rekomendasiContainer.innerHTML = `
-      <div class="empty-state">
-        Gagal memuat rekomendasi.
-      </div>
-    `;
-    console.error("Rekomendasi error:", error); // ← tambah ini biar gampang debug
   }
-}
 
-/**
- * LOAD KATEGORI
- */
+  /**
+   * LOAD KATEGORI
+   */
 
-async function loadKategori(){
+  async function loadKategori(){
 
-  try{
+    try{
 
-    const data =
-      await apiGetKategori();
+      const data =
+        await apiGetKategori();
 
-    const kategori =
-      data.data || [];
+      const kategori =
+        data.data || [];
 
-    kategori.forEach(item => {
+      kategori.forEach(item => {
 
-      kategoriSelect.innerHTML += `
-        <option value="${item}">
-          ${item}
-        </option>
-      `;
-    });
+        kategoriSelect.innerHTML += `
+          <option value="${item}">
+            ${item}
+          </option>
+        `;
+      });
 
-  }catch(error){
+    }catch(error){
 
-    console.log(error);
+      console.log(error);
+    }
   }
-}
 
-/**
- * EVENT PRODUK
- */
+  /**
+   * EVENT PRODUK
+   */
 
-document.addEventListener(
-  "click",
-  async (e) => {
+  document.addEventListener(
+    "click",
+    async (e) => {
 
-    const wishlistBtn =
-      e.target.closest(".wishlist-btn");
+      const wishlistBtn =
+        e.target.closest(".wishlist-btn");
 
-    const cartBtn =
-      e.target.closest(".cart-btn");
+      const cartBtn =
+        e.target.closest(".cart-btn");
 
-    const detailBtn =
-      e.target.closest(".detail-btn");
+      const detailBtn =
+        e.target.closest(".detail-btn");
 
-    if(wishlistBtn){
+      if(wishlistBtn){
 
-      const id =
-        wishlistBtn.dataset.id;
+        const id =
+          wishlistBtn.dataset.id;
 
-      try{
+        try{
 
-        await apiAddWishlist(id);
+          await apiAddWishlist(id);
 
-        showToast(
-          "Produk ditambahkan ke wishlist."
-        );
+          showToast(
+            "Produk ditambahkan ke wishlist."
+          );
 
-      }catch(error){
+        }catch(error){
 
-        showToast(error.message);
+          showToast(error.message);
+        }
+      }
+
+      if(cartBtn){
+
+        const id =
+          cartBtn.dataset.id;
+
+        try{
+
+          await apiAddKeranjang(id);
+
+          showToast(
+            "Produk ditambahkan ke keranjang."
+          );
+
+        }catch(error){
+
+          showToast(error.message);
+        }
+      }
+
+      if(detailBtn){
+
+        const id =
+          detailBtn.dataset.id;
+
+          window.location.href = `../detail/detail.html?id=${id}`;
       }
     }
+  );
 
-    if(cartBtn){
+  /**
+   * SEARCH REALTIME
+   */
 
-      const id =
-        cartBtn.dataset.id;
+  let searchTimeout;
 
-      try{
+  searchInput.addEventListener(
+    "input",
+    () => {
 
-        await apiAddKeranjang(id);
+      clearTimeout(searchTimeout);
 
-        showToast(
-          "Produk ditambahkan ke keranjang."
-        );
-
-      }catch(error){
-
-        showToast(error.message);
-      }
+      searchTimeout = setTimeout(() => {
+        loadProduk();
+      },400);
     }
+  );
 
-    if(detailBtn){
+  /**
+   * FILTER
+   */
 
-      const id =
-        detailBtn.dataset.id;
+  kategoriSelect.addEventListener(
+    "change",
+    loadProduk
+  );
 
-        window.location.href = `../detail/detail.html?id=${id}`;
+  sortSelect.addEventListener(
+    "change",
+    loadProduk
+  );
+
+  /**
+   * HERO BUTTON
+   */
+
+  document.getElementById(
+    "exploreBtn"
+  ).addEventListener(
+    "click",
+    () => {
+
+      window.scrollTo({
+        top:700,
+        behavior:"smooth"
+      });
     }
+  );
+
+  /**
+   * INIT
+   */
+
+  async function init(){
+
+    await loadKategori();
+
+    await loadProduk();
+
+    await loadRekomendasi();
   }
-);
 
-/**
- * SEARCH REALTIME
- */
-
-let searchTimeout;
-
-searchInput.addEventListener(
-  "input",
-  () => {
-
-    clearTimeout(searchTimeout);
-
-    searchTimeout = setTimeout(() => {
-      loadProduk();
-    },400);
-  }
-);
-
-/**
- * FILTER
- */
-
-kategoriSelect.addEventListener(
-  "change",
-  loadProduk
-);
-
-sortSelect.addEventListener(
-  "change",
-  loadProduk
-);
-
-/**
- * HERO BUTTON
- */
-
-document.getElementById(
-  "exploreBtn"
-).addEventListener(
-  "click",
-  () => {
-
-    window.scrollTo({
-      top:700,
-      behavior:"smooth"
-    });
-  }
-);
-
-/**
- * INIT
- */
-
-async function init(){
-
-  await loadKategori();
-
-  await loadProduk();
-
-  await loadRekomendasi();
-}
-
-init();
+  init();
