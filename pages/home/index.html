@@ -1,0 +1,181 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UMKM Kerajinan</title>
+
+  <!-- FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- ICONS -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  />
+
+  <link rel="stylesheet" href="/frontend/css/home.css" />
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+
+    <div class="logo">
+      <i class="fa-solid fa-store"></i>
+      <span>UMKM Kerajinan</span>
+    </div>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="#" class="active">
+        <i class="fa-solid fa-house"></i>
+        Home
+      </a>
+      <a href="../wishlist/wishlist.html">
+        <i class="fa-solid fa-heart"></i>
+        Wishlist
+      </a>
+      <a href="../keranjang/keranjang.html">
+        <i class="fa-solid fa-cart-shopping"></i>
+        Keranjang
+      </a>
+      <a href="/frontend/pages/profile/profile.html">
+        <i class="fa-solid fa-user"></i>
+        Profile
+      </a>
+      <button id="logoutBtn" class="logout-btn">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        Logout
+      </button>
+    </nav>
+
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+
+      <span class="hero-badge">
+        AI Recommendation System
+      </span>
+
+      <h1>
+        Temukan Produk<br>
+        <em>UMKM Lokal</em> Indonesia
+      </h1>
+
+      <p>
+        Jelajahi kerajinan terbaik Indonesia dengan sistem rekomendasi
+        cerdas berbasis User-Based Collaborative Filtering.
+      </p>
+
+      <button id="exploreBtn">
+        <i class="fa-solid fa-compass"></i>
+        Jelajahi Produk
+      </button>
+
+    </div>
+  </section>
+
+  <!-- FILTER -->
+  <section class="filter-section">
+
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Cari produk UMKM..."
+      />
+    </div>
+
+    <select id="kategoriSelect">
+      <option value="">Semua Kategori</option>
+    </select>
+
+    <select id="sortSelect">
+      <option value="">Urutkan</option>
+      <option value="harga_asc">Harga Termurah</option>
+      <option value="harga_desc">Harga Tertinggi</option>
+      <option value="rating_desc">Rating Tertinggi</option>
+    </select>
+
+  </section>
+
+  <!-- REKOMENDASI -->
+  <section class="section">
+    <div class="section-header">
+      <h2>✨ Rekomendasi Untuk Anda</h2>
+      <span class="ai-badge">AI Powered UBCF</span>
+    </div>
+    <div class="produk-grid" id="rekomendasiContainer">
+      <!-- rekomendasi -->
+    </div>
+  </section>
+
+  <!-- PRODUK -->
+  <section class="section">
+    <div class="section-header">
+      <h2>Produk UMKM</h2>
+    </div>
+    <div class="produk-grid" id="produkContainer">
+      <!-- produk -->
+    </div>
+  </section>
+
+  <!-- LOADING -->
+  <div class="loading-container hidden" id="loadingContainer">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast"></div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-content">
+
+      <div>
+        <h3>UMKM Kerajinan</h3>
+        <p>
+          Mendukung produk lokal Indonesia melalui teknologi
+          rekomendasi modern.
+        </p>
+      </div>
+
+      <div>
+        <h3>Sosial Media</h3>
+        <div class="socials">
+          <a href="#" aria-label="Instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="#" aria-label="Facebook">
+            <i class="fab fa-facebook"></i>
+          </a>
+          <a href="#" aria-label="TikTok">
+            <i class="fab fa-tiktok"></i>
+          </a>
+        </div>
+      </div>
+
+    </div>
+    <div class="copyright">
+      © 2026 UMKM Kerajinan Indonesia
+    </div>
+  </footer>
+
+  <script type="module" src="/frontend/js/home.js"></script>
+
+</body>
+</html>

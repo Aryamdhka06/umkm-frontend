@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wishlist — UMKM Kerajinan</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="../../css/wishlist.css" />
+</head>
+<body>
+
+  <!-- TOAST -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-icon"><i class="fa-solid fa-gem"></i></span>
+        <span class="logo-text">Kerajinan<em>UMKM</em></span>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="../home/index.html"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
+        <li><a href="../wishlist/wishlist.html" class="active"><i class="fa-solid fa-heart"></i><span>Wishlist</span></a></li>
+        <li><a href="../keranjang/keranjang.html"><i class="fa-solid fa-bag-shopping"></i><span>Keranjang</span></a></li>
+        <li><a href="../profile/profile.html"><i class="fa-solid fa-user"></i><span>Profile</span></a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="btn-logout" id="btnLogout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>Logout</span>
+        </button>
+        <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main-content">
+
+    <!-- HEADER SECTION -->
+    <section class="wishlist-header">
+      <div class="header-bg-strip"></div>
+      <div class="header-content">
+        <div class="header-icon-wrap">
+          <i class="fa-solid fa-heart"></i>
+        </div>
+        <div class="header-text">
+          <p class="header-eyebrow">Koleksi Favorit Anda</p>
+          <h1 class="header-title">Wishlist <em>Saya</em></h1>
+          <p class="header-sub">
+            <span id="wishlistCount" class="count-badge">—</span>
+            produk tersimpan
+          </p>
+        </div>
+      </div>
+
+      <!-- Sort / Filter bar -->
+      <div class="toolbar glass-card" id="toolbar" style="display:none">
+        <div class="toolbar-left">
+          <button class="toolbar-btn active" data-sort="default">Terbaru</button>
+          <button class="toolbar-btn" data-sort="price-asc">Harga ↑</button>
+          <button class="toolbar-btn" data-sort="price-desc">Harga ↓</button>
+          <button class="toolbar-btn" data-sort="rating">Rating</button>
+        </div>
+        <button class="btn-clear-all" id="btnClearAll">
+          <i class="fa-solid fa-trash-can"></i> Hapus Semua
+        </button>
+      </div>
+    </section>
+
+    <!-- GRID -->
+    <section class="wishlist-grid-section">
+      <div class="wishlist-grid" id="wishlistGrid">
+        <!-- skeleton cards injected by JS -->
+      </div>
+    </section>
+
+    <!-- EMPTY STATE -->
+    <div class="empty-state" id="emptyState" style="display:none">
+      <div class="empty-orb"></div>
+      <div class="empty-icon"><i class="fa-regular fa-heart"></i></div>
+      <h2 class="empty-title">Wishlist Masih Kosong</h2>
+      <p class="empty-sub">Temukan produk kerajinan tangan terbaik dan simpan di sini.</p>
+      <a href="index.html" class="btn-shop">
+        <i class="fa-solid fa-store"></i> Mulai Belanja
+      </a>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="nav-logo" style="margin-bottom:14px">
+          <span class="logo-icon"><i class="fa-solid fa-gem"></i></span>
+          <span class="logo-text">Kerajinan<em>UMKM</em></span>
+        </div>
+        <p>Platform digital untuk produk kerajinan tangan Indonesia berkualitas tinggi.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigasi</h4>
+        <a href="index.html">Beranda</a>
+        <a href="wishlist.html">Wishlist</a>
+        <a href="keranjang.html">Keranjang</a>
+        <a href="profile.html">Profile</a>
+      </div>
+      <div class="footer-col">
+        <h4>Tentang</h4>
+        <a href="#">Tentang Kami</a>
+        <a href="#">Kebijakan Privasi</a>
+        <a href="#">Syarat & Ketentuan</a>
+        <a href="#">Hubungi Kami</a>
+      </div>
+      <div class="footer-col">
+        <h4>Ikuti Kami</h4>
+        <div class="social-icons">
+          <a href="#" class="social-btn"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="social-btn"><i class="fa-brands fa-tiktok"></i></a>
+          <a href="#" class="social-btn"><i class="fa-brands fa-facebook"></i></a>
+          <a href="#" class="social-btn"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 KerajinanUMKM. Dibuat dengan <i class="fa-solid fa-heart" style="color:var(--gold)"></i> untuk pengrajin Indonesia.</p>
+    </div>
+  </footer>
+
+  <script type="module" src="../../js/wishlist.js"></script>
+</body>
+</html>

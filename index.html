@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Masuk · Daftar — UMKM Kerajinan</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/frontend/css/style.css" />
+
+  <style>
+    /* inline: form-msg (scoped here to avoid bloat in auth.css) */
+    .form-msg {
+      display: none;
+      align-items: flex-start; gap: 8px;
+      padding: 10px 14px; border-radius: 10px;
+      font-size: .83rem; line-height: 1.5;
+      margin-bottom: 14px;
+      animation: msgIn .25s ease both;
+    }
+    @keyframes msgIn { from { opacity:0; transform:translateY(-5px); } to { opacity:1; transform:translateY(0); } }
+    .form-msg.error   { display:flex; background:rgba(224,92,92,.09); border:1px solid rgba(224,92,92,.22); color:#F09090; }
+    .form-msg.success { display:flex; background:rgba(92,201,138,.09); border:1px solid rgba(92,201,138,.22); color:#7EEAAA; }
+    .form-msg i { flex-shrink:0; margin-top:1px; }
+  </style>
+</head>
+<body>
+
+  <!-- ── BACKGROUND ── -->
+  <div class="bg-layer" aria-hidden="true">
+    <div class="bg-pattern"></div>
+    <div class="bg-noise"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="diamonds" id="diamonds"></div>
+  </div>
+
+  <!-- ── AUTH CARD ── -->
+  <div class="auth-card">
+
+    <!-- ════ LEFT PANEL ════ -->
+    <div class="left-panel">
+      <div class="lp-inner">
+
+        <!-- ── LOGIN PANEL ── -->
+        <div class="form-panel" id="loginPanel">
+          <div class="form-head">
+            <div class="form-badge">
+              <div class="badge-dot"><i class="fa-solid fa-basket-shopping"></i></div>
+              <span>UMKM Kerajinan</span>
+            </div>
+            <h2>Selamat Datang<br>Kembali</h2>
+            <p>Masuk ke akun Anda dan lanjutkan berjualan</p>
+          </div>
+
+          <div class="form-msg" id="loginMsg" role="alert"></div>
+
+          <form id="loginForm" novalidate>
+            <div class="field">
+              <label class="field-label" for="loginEmail">Email</label>
+              <div class="input-wrap">
+                <i class="fa-regular fa-envelope input-icon"></i>
+                <input type="email" id="loginEmail" placeholder="nama@email.com" autocomplete="email" required />
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="loginPassword">Password</label>
+              <div class="input-wrap has-eye">
+                <i class="fa-solid fa-lock input-icon"></i>
+                <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password" required />
+                <button type="button" class="btn-eye" data-target="loginPassword" aria-label="Toggle password">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-meta">
+              <label class="remember-label">
+                <input type="checkbox" id="rememberMe" />
+                <span>Ingat saya</span>
+              </label>
+              <a href="#" class="forgot-link">Lupa password?</a>
+            </div>
+
+            <button type="submit" class="btn-submit" id="loginBtn">
+              <span class="btn-text"><i class="fa-solid fa-right-to-bracket"></i>&nbsp; Masuk</span>
+              <span class="btn-loader"><span class="spinner"></span> Memproses…</span>
+            </button>
+
+            <div class="gold-divider"><span>atau masuk via</span></div>
+
+            <div class="social-row">
+              <button type="button" class="btn-social google">
+                <i class="fa-brands fa-google"></i> Google
+              </button>
+              <button type="button" class="btn-social shopee">
+                <i class="fa-brands fa-shopee"></i> Shopee
+              </button>
+            </div>
+          </form>
+
+          <p class="switch-text">
+            Belum punya akun?&nbsp;
+            <button type="button" class="switch-btn" id="goRegister">Daftar sekarang</button>
+          </p>
+        </div>
+
+        <!-- ── REGISTER PANEL ── -->
+        <div class="form-panel hidden" id="registerPanel">
+          <div class="form-head">
+            <div class="form-badge">
+              <div class="badge-dot"><i class="fa-solid fa-store"></i></div>
+              <span>Buka Toko Baru</span>
+            </div>
+            <h2>Bergabung &<br><em style="font-style:normal;background:linear-gradient(135deg,#E8B84B,#F5D27A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Mulai Berjualan</em></h2>
+            <p>Daftarkan akun dan jangkau ribuan pembeli</p>
+          </div>
+
+          <div class="form-msg" id="registerMsg" role="alert"></div>
+
+          <form id="registerForm" novalidate>
+            <div class="field">
+              <label class="field-label" for="regNama">Nama Lengkap</label>
+              <div class="input-wrap">
+                <i class="fa-solid fa-user input-icon"></i>
+                <input type="text" id="regNama" placeholder="Nama pemilik usaha" autocomplete="name" required />
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="regEmail">Email</label>
+              <div class="input-wrap">
+                <i class="fa-regular fa-envelope input-icon"></i>
+                <input type="email" id="regEmail" placeholder="nama@email.com" autocomplete="email" required />
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="regPassword">Password</label>
+              <div class="input-wrap has-eye">
+                <i class="fa-solid fa-lock input-icon"></i>
+                <input type="password" id="regPassword" placeholder="Min. 8 karakter" autocomplete="new-password" required />
+                <button type="button" class="btn-eye" data-target="regPassword" aria-label="Toggle password">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+              </div>
+              <div class="pw-strength">
+                <div class="pw-track"><div class="pw-fill" id="pwFill"></div></div>
+                <span id="pwLabel">Kekuatan password</span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="regConfirm">Konfirmasi Password</label>
+              <div class="input-wrap has-eye">
+                <i class="fa-solid fa-shield-halved input-icon"></i>
+                <input type="password" id="regConfirm" placeholder="Ulangi password" autocomplete="new-password" required />
+                <button type="button" class="btn-eye" data-target="regConfirm" aria-label="Toggle confirm">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-submit" id="registerBtn" style="margin-top:4px;">
+              <span class="btn-text"><i class="fa-solid fa-store"></i>&nbsp; Buat Akun</span>
+              <span class="btn-loader"><span class="spinner"></span> Memproses…</span>
+            </button>
+          </form>
+
+          <p class="switch-text">
+            Sudah punya akun?&nbsp;
+            <button type="button" class="switch-btn" id="goLogin">Masuk sekarang</button>
+          </p>
+        </div>
+
+      </div>
+    </div><!-- /left-panel -->
+
+    <!-- ════ RIGHT PANEL ════ -->
+    <div class="right-panel">
+      <div class="rp-inner">
+
+        <!-- Login state -->
+        <div class="rp-state" id="rpLogin">
+          <div class="rp-icon">
+            <i class="fa-solid fa-basket-shopping"></i>
+          </div>
+          <h3 class="rp-title">Kerajinan <em>Nusantara</em><br>di Ujung Jari</h3>
+          <p class="rp-desc">
+            Platform marketplace khusus UMKM kerajinan lokal. Jual batik, anyaman, ukiran, dan ribuan produk khas Indonesia ke seluruh penjuru negeri.
+          </p>
+          <div class="rp-tags">
+            <div class="rp-tag"><i class="fa-solid fa-shirt"></i><span>Batik</span></div>
+            <div class="rp-tag"><i class="fa-solid fa-leaf"></i><span>Anyaman</span></div>
+            <div class="rp-tag"><i class="fa-solid fa-gem"></i><span>Perhiasan</span></div>
+            <div class="rp-tag"><i class="fa-solid fa-paintbrush"></i><span>Ukiran</span></div>
+            <div class="rp-tag"><i class="fa-solid fa-mug-hot"></i><span>Gerabah</span></div>
+          </div>
+          <div class="rp-stats">
+            <div class="rp-stat">
+              <strong>2.4K+</strong>
+              <span>Produk</span>
+            </div>
+            <div class="rp-stat">
+              <strong>380+</strong>
+              <span>Penjual</span>
+            </div>
+            <div class="rp-stat">
+              <strong>Lokal</strong>
+              <span>100% Asli</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Register state -->
+        <div class="rp-state hidden" id="rpRegister">
+          <div class="rp-icon">
+            <i class="fa-solid fa-store"></i>
+          </div>
+          <h3 class="rp-title">Buka Toko,<br><em>Raih Pasar</em></h3>
+          <p class="rp-desc">
+            Hanya butuh 3 langkah untuk mulai menjual kerajinan Anda ke ribuan pembeli yang sudah menunggu.
+          </p>
+          <div class="rp-steps">
+            <div class="rp-step">
+              <div class="step-num">01</div>
+              <span>Buat akun & lengkapi profil toko</span>
+            </div>
+            <div class="rp-step">
+              <div class="step-num">02</div>
+              <span>Upload produk kerajinan Anda</span>
+            </div>
+            <div class="rp-step">
+              <div class="step-num">03</div>
+              <span>Terima pesanan & mulai kirim</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /right-panel -->
+
+  </div><!-- /auth-card -->
+
+  <!-- Toast -->
+  <div id="toastStack" aria-live="polite"></div>
+
+  <!-- Diamonds particle script -->
+  <script>
+    (function(){
+      const c = document.getElementById('diamonds');
+      for(let i=0;i<18;i++){
+        const d = document.createElement('div');
+        d.className = 'diamond';
+        d.style.cssText = `
+          left:${Math.random()*100}%;
+          top:${55+Math.random()*45}%;
+          width:${3+Math.random()*4}px;
+          height:${3+Math.random()*4}px;
+          animation-duration:${8+Math.random()*12}s;
+          animation-delay:${Math.random()*10}s;
+        `;
+        c.appendChild(d);
+      }
+    })();
+  </script>
+
+  <script type="module" src="/frontend/js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detail Produk — UMKM Kerajinan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+  <link rel="stylesheet" href="/frontend/css/detail.css"/>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="logo">
+      <i class="fa-solid fa-store"></i>
+      <span>UMKM Kerajinan</span>
+    </div>
+    <nav class="nav-links" id="navLinks">
+      <a href="/frontend/pages/home/index.html">
+        <i class="fa-solid fa-house"></i> Home
+      </a>
+      <a href="/frontend/pages/wishlist/wishlist.html">
+        <i class="fa-solid fa-heart"></i> Wishlist
+      </a>
+      <a href="/frontend/pages/keranjang/keranjang.html">
+        <i class="fa-solid fa-cart-shopping"></i> Keranjang
+      </a>
+      <a href="/frontend/pages/profile/profile.html">
+        <i class="fa-solid fa-user"></i> Profile
+      </a>
+      <button id="logoutBtn" class="logout-btn">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
+      </button>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href="/frontend/index.html">Home</a>
+    <i class="fa-solid fa-chevron-right"></i>
+    <span id="breadcrumbKategori">Kategori</span>
+    <i class="fa-solid fa-chevron-right"></i>
+    <span id="breadcrumbNama">Produk</span>
+  </div>
+
+  <!-- SKELETON -->
+  <div id="skeletonContainer" class="detail-wrapper">
+    <div class="skeleton-img skeleton-pulse"></div>
+    <div class="skeleton-body">
+      <div class="skeleton-line skeleton-pulse" style="width:40%;height:14px"></div>
+      <div class="skeleton-line skeleton-pulse" style="width:75%;height:32px;margin-top:12px"></div>
+      <div class="skeleton-line skeleton-pulse" style="width:55%;height:28px;margin-top:8px"></div>
+      <div class="skeleton-line skeleton-pulse" style="width:30%;height:20px;margin-top:16px"></div>
+      <div class="skeleton-line skeleton-pulse" style="width:100%;height:80px;margin-top:24px"></div>
+      <div class="skeleton-line skeleton-pulse" style="width:60%;height:52px;margin-top:32px;border-radius:999px"></div>
+    </div>
+  </div>
+
+  <!-- DETAIL CONTENT -->
+  <main id="detailContent" class="detail-wrapper hidden">
+
+    <div class="detail-image-side">
+      <div class="image-frame">
+        <img id="produkGambar" src="" alt=""/>
+        <div class="image-overlay"></div>
+      </div>
+      <div class="badge-float" id="badgeKategori"></div>
+    </div>
+
+    <div class="detail-info-side">
+
+      <div class="info-top">
+        <div class="meta-row">
+          <span class="meta-id" id="produkId"></span>
+          <span class="stock-badge" id="stockBadge"></span>
+        </div>
+        <h1 class="produk-nama" id="produkNama"></h1>
+        <div class="price-row">
+          <span class="produk-harga" id="produkHarga"></span>
+        </div>
+      </div>
+
+      <div class="rating-block">
+        <div class="stars" id="starsDisplay"></div>
+        <span class="rating-val" id="ratingVal"></span>
+        <span class="rating-count" id="ratingCount"></span>
+      </div>
+
+      <div class="deskripsi-block">
+        <h4>Tentang Produk</h4>
+        <p id="produkDeskripsi"></p>
+      </div>
+
+      <div class="action-block">
+        <div class="qty-control">
+          <button id="qtyMinus" class="qty-btn">−</button>
+          <span id="qtyVal">1</span>
+          <button id="qtyPlus" class="qty-btn">+</button>
+        </div>
+        <div class="action-btns">
+          <button id="wishlistBtn" class="btn-wishlist" title="Tambah ke Wishlist">
+            <i class="fa-regular fa-heart"></i>
+          </button>
+          <button id="cartBtn" class="btn-cart">
+            <i class="fa-solid fa-cart-plus"></i>
+            Tambah ke Keranjang
+          </button>
+        </div>
+      </div>
+
+      <div class="info-chips">
+        <div class="chip"><i class="fa-solid fa-shield-halved"></i><span>Produk Terverifikasi</span></div>
+        <div class="chip"><i class="fa-solid fa-truck"></i><span>Gratis Ongkir</span></div>
+        <div class="chip"><i class="fa-solid fa-rotate-left"></i><span>Retur 7 Hari</span></div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- RATING SECTION -->
+  <section id="ratingSection" class="section-rating hidden">
+    <div class="section-inner">
+      <h2>Berikan Rating</h2>
+      <p>Sudah pernah membeli? Bantu pengguna lain dengan penilaianmu.</p>
+      <div class="star-input" id="starInput">
+        <i class="fa-regular fa-star" data-val="1"></i>
+        <i class="fa-regular fa-star" data-val="2"></i>
+        <i class="fa-regular fa-star" data-val="3"></i>
+        <i class="fa-regular fa-star" data-val="4"></i>
+        <i class="fa-regular fa-star" data-val="5"></i>
+      </div>
+      <button id="submitRatingBtn" class="btn-submit-rating" disabled>Kirim Rating</button>
+    </div>
+  </section>
+
+  <!-- TOAST -->
+  <div id="toast"></div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div>
+        <h3>UMKM Kerajinan</h3>
+        <p>Mendukung produk lokal Indonesia melalui teknologi rekomendasi modern.</p>
+      </div>
+      <div>
+        <h3>Sosial Media</h3>
+        <div class="socials">
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+          <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="copyright">© 2026 UMKM Kerajinan Indonesia</div>
+  </footer>
+
+  <script type="module" src="/frontend/js/detail.js"></script>
+</body>
+</html>

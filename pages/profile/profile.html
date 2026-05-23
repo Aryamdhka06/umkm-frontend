@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile — UMKM Kerajinan</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/frontend/css/profile.css" />
+</head>
+<body>
+
+  <!-- ══════════════════════ TOAST ══════════════════════ -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- ══════════════════════ NAVBAR ══════════════════════ -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+
+      <a href="index.html" class="nav-logo">
+        <span class="logo-icon"><i class="fa-solid fa-gem"></i></span>
+        <span class="logo-text">Kerajinan<em>UMKM</em></span>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="../home/index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="../wishlist/wishlist.html"><i class="fa-solid fa-heart"></i> Wishlist</a></li>
+        <li><a href="../keranjang/keranjang.html"><i class="fa-solid fa-bag-shopping"></i> Keranjang</a></li>
+        <li><a href="profile.html" class="active"><i class="fa-solid fa-user"></i> Profile</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="btn-logout" id="btnLogout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>Logout</span>
+        </button>
+        <button class="nav-hamburger" id="navHamburger">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
+    </div>
+  </nav>
+
+  <!-- ══════════════════════ MAIN ══════════════════════ -->
+  <main class="main-content">
+
+    <!-- ── HERO PROFILE CARD ── -->
+    <section class="profile-hero">
+      <div class="hero-bg-orb orb-1"></div>
+      <div class="hero-bg-orb orb-2"></div>
+      <div class="hero-bg-orb orb-3"></div>
+
+      <div class="profile-card glass-card" id="profileCard">
+        <!-- Loading skeleton -->
+        <div class="skeleton-wrap" id="profileSkeleton">
+          <div class="skeleton sk-avatar"></div>
+          <div class="skeleton-lines">
+            <div class="skeleton sk-line sk-wide"></div>
+            <div class="skeleton sk-line sk-mid"></div>
+            <div class="skeleton sk-line sk-narrow"></div>
+          </div>
+        </div>
+
+        <!-- Actual content -->
+        <div class="profile-info hidden" id="profileInfo">
+          <div class="avatar-wrap">
+            <div class="avatar-ring"></div>
+            <div class="avatar-inner" id="avatarEl">
+              <i class="fa-solid fa-user"></i>
+            </div>
+            <div class="avatar-status"><i class="fa-solid fa-circle-check"></i></div>
+          </div>
+
+          <div class="profile-meta">
+            <div class="profile-badge">
+              <i class="fa-solid fa-star"></i> Pengguna Aktif
+            </div>
+            <h1 class="profile-name" id="profileName">—</h1>
+            <p class="profile-email" id="profileEmail">—</p>
+            <p class="profile-join" id="profileJoin"><i class="fa-regular fa-calendar"></i> Bergabung —</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── STATISTIK ── -->
+    <section class="section-block">
+      <h2 class="section-title">
+        <span class="title-line"></span>
+        Statistik Aktivitas
+        <span class="title-line"></span>
+      </h2>
+      <div class="stats-grid" id="statsGrid">
+        <div class="stat-card glass-card" data-stat="wishlist">
+          <div class="stat-icon"><i class="fa-solid fa-heart"></i></div>
+          <div class="stat-body">
+            <p class="stat-label">Wishlist</p>
+            <p class="stat-value" id="statWishlist"><span class="sk-num skeleton"></span></p>
+          </div>
+        </div>
+        <div class="stat-card glass-card" data-stat="keranjang">
+          <div class="stat-icon"><i class="fa-solid fa-bag-shopping"></i></div>
+          <div class="stat-body">
+            <p class="stat-label">Keranjang</p>
+            <p class="stat-value" id="statKeranjang"><span class="sk-num skeleton"></span></p>
+          </div>
+        </div>
+        <div class="stat-card glass-card" data-stat="rating">
+          <div class="stat-icon"><i class="fa-solid fa-star"></i></div>
+          <div class="stat-body">
+            <p class="stat-label">Rating</p>
+            <p class="stat-value" id="statRating"><span class="sk-num skeleton"></span></p>
+          </div>
+        </div>
+        <div class="stat-card glass-card" data-stat="rekomendasi">
+          <div class="stat-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+          <div class="stat-body">
+            <p class="stat-label">Rekomendasi</p>
+            <p class="stat-value" id="statRekomendasi"><span class="sk-num skeleton"></span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── AKTIVITAS USER ── -->
+    <section class="section-block">
+      <h2 class="section-title">
+        <span class="title-line"></span>
+        Aktivitas Terbaru
+        <span class="title-line"></span>
+      </h2>
+
+      <div class="activity-grid">
+
+        <!-- Rating terbaru -->
+        <div class="activity-panel glass-card">
+          <div class="panel-header">
+            <i class="fa-solid fa-star panel-icon"></i>
+            <h3>Produk Dirating</h3>
+          </div>
+          <div class="panel-body" id="panelRating">
+            <div class="panel-loading"><div class="spinner-sm"></div></div>
+          </div>
+        </div>
+
+        <!-- Wishlist terbaru -->
+        <div class="activity-panel glass-card">
+          <div class="panel-header">
+            <i class="fa-solid fa-heart panel-icon"></i>
+            <h3>Wishlist Terbaru</h3>
+          </div>
+          <div class="panel-body" id="panelWishlist">
+            <div class="panel-loading"><div class="spinner-sm"></div></div>
+          </div>
+        </div>
+
+        <!-- Keranjang -->
+        <div class="activity-panel glass-card">
+          <div class="panel-header">
+            <i class="fa-solid fa-bag-shopping panel-icon"></i>
+            <h3>Aktivitas Keranjang</h3>
+          </div>
+          <div class="panel-body" id="panelKeranjang">
+            <div class="panel-loading"><div class="spinner-sm"></div></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── REKOMENDASI AI ── -->
+    <section class="section-block">
+      <h2 class="section-title">
+        <span class="title-line"></span>
+        Rekomendasi AI Untukmu
+        <span class="title-line"></span>
+      </h2>
+      <p class="section-sub">Berdasarkan analisis UBCF (User-Based Collaborative Filtering)</p>
+
+      <div class="rekom-grid" id="rekomendasiGrid">
+        <!-- Skeleton cards -->
+        <div class="rekom-card glass-card skeleton-card">
+          <div class="skeleton sk-img"></div>
+          <div class="skeleton sk-line sk-wide mt-8"></div>
+          <div class="skeleton sk-line sk-mid"></div>
+        </div>
+        <div class="rekom-card glass-card skeleton-card">
+          <div class="skeleton sk-img"></div>
+          <div class="skeleton sk-line sk-wide mt-8"></div>
+          <div class="skeleton sk-line sk-mid"></div>
+        </div>
+        <div class="rekom-card glass-card skeleton-card">
+          <div class="skeleton sk-img"></div>
+          <div class="skeleton sk-line sk-wide mt-8"></div>
+          <div class="skeleton sk-line sk-mid"></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══════════════════════ FOOTER ══════════════════════ -->
+  <footer class="footer">
+    <div class="footer-inner">
+
+      <div class="footer-brand">
+        <span class="logo-icon"><i class="fa-solid fa-gem"></i></span>
+        <span class="logo-text">Kerajinan<em>UMKM</em></span>
+        <p>Platform digital untuk produk kerajinan tangan Indonesia berkualitas tinggi.</p>
+      </div>
+
+      <div class="footer-links">
+        <h4>Navigasi</h4>
+        <a href="index.html">Beranda</a>
+        <a href="produk.html">Produk</a>
+        <a href="wishlist.html">Wishlist</a>
+        <a href="profile.html">Profile</a>
+      </div>
+
+      <div class="footer-links">
+        <h4>Tentang</h4>
+        <a href="#">Tentang Kami</a>
+        <a href="#">Kebijakan Privasi</a>
+        <a href="#">Syarat & Ketentuan</a>
+        <a href="#">Hubungi Kami</a>
+      </div>
+
+      <div class="footer-social">
+        <h4>Ikuti Kami</h4>
+        <div class="social-icons">
+          <a href="#" class="social-btn"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="social-btn"><i class="fa-brands fa-tiktok"></i></a>
+          <a href="#" class="social-btn"><i class="fa-brands fa-facebook"></i></a>
+          <a href="#" class="social-btn"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2025 KerajinanUMKM. Dibuat dengan <i class="fa-solid fa-heart" style="color:var(--gold)"></i> untuk pengrajin Indonesia.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module" src="/frontend/js/profile.js"></script>
+
+</body>
+</html>
