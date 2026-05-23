@@ -4,7 +4,7 @@
  */
 
 import { apiLogin, apiRegister } from "./api.js";
-const HOME = "../frontend/pages/home/index.html";
+const HOME = "frontend/pages/home/index.html";
 
 // ── AUTO REDIRECT ──
 if (localStorage.getItem("umkm_user")) window.location.replace(HOME);
