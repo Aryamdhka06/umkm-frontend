@@ -73,7 +73,7 @@ const user =
 
 if (!user) {
   window.location.href =
-    "index.html";
+    "../../index.html";
 }
 
 /**
@@ -143,7 +143,7 @@ function renderProdukCard(item){
     <div class="produk-card">
 
       <img
-  src="${item.gambar_url}"
+  src="https://web-production-aa9b5.up.railway.app/static/uploads/${item.gambar_url}"
   alt="${item.nama}"
   class="produk-image"
 />
@@ -385,8 +385,7 @@ document.addEventListener(
       const id =
         detailBtn.dataset.id;
 
-      window.location.href =
-        `/frontend/pages/detail/detail.html?id=${id}`;
+        window.location.href = `../detail/detail.html?id=${id}`;
     }
   }
 );
