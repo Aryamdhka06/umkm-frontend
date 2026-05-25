@@ -10,6 +10,7 @@ import {
   apiGetKeranjang,
   apiGetMyRatings,
   apiGetRekomendasi,
+  apiGetProdukDetail,
 } from "./api.js";
 
 
@@ -143,17 +144,19 @@ function setStatValue(elId, value) {
 function buildActivityItem({ id, gambar, nama, meta, badge }) {
   const item = document.createElement("div");
   item.className = "activity-item";
-  item.onclick = () => (window.location.href = `detail.html?id=${id}`);
+  item.onclick = () => window.location.href = `../detail/detail.html?id=${id}`
+
+  // Deteksi apakah gambar sudah URL lengkap atau hanya filename
+  const imgSrc = gambar
+    ? (gambar.startsWith("http") ? gambar : `https://web-production-aa9b5.up.railway.app/static/uploads/${gambar}`)
+    : null;
+
   item.innerHTML = `
     <div class="activity-img">
-  ${gambar
-    ? `<img
-         src="https://web-production-aa9b5.up.railway.app/static/uploads/${gambar}"
-         alt="${nama}"
-         onerror="this.parentElement.innerHTML='<i class=\\'fa-solid fa-image\\'></i>'"
-       >`
-    : `<i class="fa-solid fa-image"></i>`}
-</div>
+      ${imgSrc
+        ? `<img src="${imgSrc}" alt="${nama}" onerror="this.parentElement.innerHTML='<i class=\\'fa-solid fa-image\\'></i>'">`
+        : `<i class="fa-solid fa-image"></i>`}
+    </div>
     <div class="activity-info">
       <p class="activity-name">${nama}</p>
       <p class="activity-meta">${meta}</p>
@@ -202,10 +205,10 @@ async function loadWishlist() {
     }
 
     list.slice(0, 4).forEach((item) => {
-      const produk = item.produk || item;
+      const produk = item;
       panel.appendChild(buildActivityItem({
         id:     produk.id,
-        gambar: produk.gambar,
+        gambar: produk.gambar_url,
         nama:   produk.nama,
         meta:   formatRupiah(produk.harga),
         badge:  `<i class="fa-solid fa-heart"></i>`,
@@ -239,7 +242,7 @@ async function loadKeranjang() {
       const produk = item.produk || item;
       panel.appendChild(buildActivityItem({
         id:     produk.id,
-        gambar: produk.gambar,
+        gambar: produk.gambar_url,
         nama:   produk.nama,
         meta:   `${item.jumlah || 1} item`,
         badge:  `× ${item.jumlah || 1}`,
@@ -269,16 +272,31 @@ async function loadRatings() {
       return;
     }
 
-    list.slice(0, 4).forEach((item) => {
-      const produk = item.produk || item;
-      panel.appendChild(buildActivityItem({
-        id:     produk.id || item.produk_id,
-        gambar: produk.gambar,
-        nama:   produk.nama || "Produk",
-        meta:   `Rating: ${item.nilai}/5`,
-        badge:  `<span class="stars">${renderStars(item.nilai)}</span>`,
-      }));
-    });
+    // Fetch detail produk untuk setiap rating
+    const items = await Promise.all(
+  list.slice(0, 4).map(async (item) => {
+    try {
+      const detail = await apiGetProdukDetail(item.produk_id);
+      console.log("detail:", detail);
+      const produk = detail.data || detail.produk || detail;
+      console.log("produk.id:", produk?.id);
+      return { item, produk };
+    } catch (e) {
+      console.log("error fetch produk:", e);
+      return { item, produk: null };
+    }
+  })
+);
+
+    items.forEach(({ item, produk }) => {
+  panel.appendChild(buildActivityItem({
+    id:     produk?.id || item.produk_id,  // 👈 ambil dari produk.id dulu
+    gambar: produk?.gambar_url || null,
+    nama:   produk?.nama || "Produk",
+    meta:   `Rating: ${item.nilai}/5`,
+    badge:  `<span class="stars">${renderStars(item.nilai)}</span>`,
+  }));
+});
 
   } catch (err) {
     setStatValue("statRating", 0);
@@ -297,7 +315,7 @@ async function loadRekomendasi() {
 
   try {
     const res  = await apiGetRekomendasi();
-    const list = res.data || res.rekomendasi || [];
+    const list = res.recommendations || [];
 
     setStatValue("statRekomendasi", list.length);
 
@@ -315,8 +333,8 @@ async function loadRekomendasi() {
     list.forEach((item, i) => {
       const produk    = item.produk || item;
       const predicted = item.predicted_rating ?? item.prediksi ?? null;
-      const sim       = item.similarity        ?? item.similaritas ?? null;
-
+      const sim = item.similarity_score ?? null;
+        const produkId = item.produk_id || produk.id; 
       const card = document.createElement("div");
       card.className = "rekom-card glass-card";
       card.style.animationDelay = `${i * 0.08}s`;
@@ -324,10 +342,10 @@ async function loadRekomendasi() {
 
       card.innerHTML = `
         <div class="rekom-img" style="overflow:hidden">
-          ${produk.gambar
-            ? `<img src="${produk.gambar}" alt="${produk.nama}" onerror="this.style.display='none'">`
-            : `<i class="fa-solid fa-box-open"></i>`}
-        </div>
+  ${item.gambar_url
+    ? `<img src="https://web-production-aa9b5.up.railway.app/static/uploads/${item.gambar_url}" alt="${item.nama}" onerror="this.style.display='none'">`
+    : `<i class="fa-solid fa-box-open"></i>`}
+</div>
         <div class="rekom-body">
           <span class="rekom-cat">${produk.kategori || "Kerajinan"}</span>
           <h3 class="rekom-name">${produk.nama || "Produk"}</h3>
@@ -351,7 +369,7 @@ async function loadRekomendasi() {
           </div>
         </div>
         <div class="rekom-footer">
-          <button class="btn-detail" data-id="${produk.id}">
+          <button class="btn-detail" data-id="${produkId}">
             Lihat Detail <i class="fa-solid fa-arrow-right"></i>
           </button>
         </div>
@@ -359,8 +377,8 @@ async function loadRekomendasi() {
 
       // Click card or button → detail
       card.addEventListener("click", () => {
-        window.location.href = `detail.html?id=${produk.id}`;
-      });
+  window.location.href = `../detail/detail.html?id=${produkId}`;
+});
 
       grid.appendChild(card);
     });

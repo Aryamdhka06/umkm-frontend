@@ -1,8 +1,14 @@
+const BASE_IMG = "https://web-production-aa9b5.up.railway.app/static/uploads/";
+
 export function renderRekomendasiCard(item) {
+  const gambar = item.gambar_url.startsWith("http")
+    ? item.gambar_url
+    : BASE_IMG + item.gambar_url;
+
   return `
     <div class="produk-card">
       <img
-        src="${item.gambar_url}"
+        src="${gambar}"
         class="produk-image"
         alt="${item.nama}"
       />
